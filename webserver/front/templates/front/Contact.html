@@ -1,29 +1,33 @@
 <!DOCTYPE html>
+{%load static%}
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>SupShop</title>
-    <link rel="stylesheet" href="style/styles.css" />
-    <link rel="icon" href="image/cadi.ico" />
+    <link rel="stylesheet" href="{% static 'front/style/styles.css' %}" />
+    <link rel="icon" href="{% static 'front/image/cadi.ico' %}" />
     </head>
 <body>
+    
+<!--TOPNAVIGATION-->
+    
 <div class="topnav">
-  <a class="active" href="#home">Accueil</a>
-  <a href="#news">Boutique</a>  
-  <a href="Contact.html">Contact</a>
+  <a class="active" href="/front">Accueil</a>
+  <a href="achat">Mes achats</a>
+  <a href="contact">Contact</a>
   <a href="#about">A propos</a>
     <div class="topnav-right">
+        <button onclick="document.getElementById('id02').style.display='block'" 
+        style="width:auto;">Connexion</button>
         <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Inscription</button>
-        <a href="#sinscrire">Connexion</a>
     </div>
 </div>
-
 
 <!--popup inscription-->
     
 <div id="id01" class="modal">
   <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-  <form class="modal-content" action="/action_page.php">
+  <form class="modal-content">
     <div class="container">
       <h1>Inscription</h1>
       <p>Merci de remplir les champs pour créer votre compte</p>
@@ -42,16 +46,12 @@
 
       <label for="psw-repeat"><b>Confirmation de mot de passe</b></label>
       <input type="password" placeholder="Confirmer mot de passe" name="psw-repeat" required>
-      
-      <label>
-        <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Se souvenir de moi
-      </label>
 
-      <p>En créant le compte vous acceptez les conditions d'utilisation et la politique de confidentialité <a href="#" style="color:dodgerblue">conditions d'utilisation & politique de confidentialité</a>.</p>
+      <p>En créant le compte vous acceptez les <a href="#" style="color:dodgerblue">conditions d'utilisation & politique de confidentialité</a>.</p>
 
       <div class="clearfix">
         <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Annuler</button>
-        <button type="submit" class="signupbtn">Terminer l'inscription</button>
+        <button type="submit" class="signupbtnregister">Terminer l'inscription</button>
       </div>
     
       </div>
@@ -59,11 +59,42 @@
 </div>
       
 <!--fin popup inscription-->
+
+    
+<!--popup connexion-->
+    
+ <div id="id02" class="modal">
+  <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
+  <form class="modal-content animate">
+
+    <div class="container">
+      <label for="nom"><b>Nom</b></label>
+      <input type="text" placeholder="Nom" name="nom" required>
+
+      <label for="psw"><b>mot de passe</b></label>
+      <input type="password" placeholder="mot de passe" name="mdp" required>
+        
+      <button type="submit" class="loginbtnlogin">Connexion</button>
+      <label>
+        <input type="checkbox" checked="checked" name="souvenir"> Se souvenir de moi
+      </label>
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtnlogin">Annuler</button>
+      <span class="psw"><a href="#">mot de passe oublié ?</a></span>
+    </div>
+  </form>
+</div>   
+    
+<!--fin popup connexion-->
+    
+<!--FIN TOPNAVIGATION-->
     
  <h3>Formulaire de contact</h3>
 
 <div class="container">
-  <form action="/action_page.php">
+  <form>
     <label for="nom">Nom</label>
     <input type="text" id="nom" name="nom" placeholder="Ton nom..">
 

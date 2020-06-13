@@ -13,3 +13,13 @@ def contact(request):
     context = {
     }
     return render(request, 'front/contact.html', context)
+	
+def achat(request):
+    context = {
+    }
+    return render(request, 'front/achat.html', context)
+	
+def about(request):
+    context = {
+    }
+    return render(request, 'front/about.html', context)
