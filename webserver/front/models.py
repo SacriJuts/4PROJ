@@ -1,22 +1,28 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 
-class User(models.Model):
-	name = models.CharField(max_length = 50)
-	password = models.CharField(max_length = 64)
-	mail = models.CharField(max_length = 150)
+class User(AbstractUser):
 	qrcode = models.CharField(max_length = 200)
-	admin = models.BooleanField()
+
+	def __str__(self):
+		return self.username
 
 class Cart(models.Model) :
 	client = models.ForeignKey(User, on_delete = models.CASCADE)
-	finalised = models.BooleanField()
+	date = models.DateTimeField()
+
+	def __str__(self):
+		return self.client.name + " - " + self.date.ctime()
 
 class Shelf(models.Model):
+	name = models.CharField(max_length=50)
 	position_x = models.FloatField()
 	position_y = models.FloatField()
 
+	def __str__(self):
+		return self.name + " (" + str(self.position_x) + ", " + str(self.position_y) + ")"
 
 class Product(models.Model):
 	cart = models.ForeignKey(Cart, on_delete = models.DO_NOTHING)
@@ -25,3 +31,6 @@ class Product(models.Model):
 	name = models.CharField(max_length = 500)
 	qrcode = models.CharField(max_length = 200)
 	serial_number = models.CharField(max_length = 100)
+
+	def __str__(self):
+		return self.name

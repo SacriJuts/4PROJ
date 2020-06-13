@@ -24,7 +24,7 @@ SECRET_KEY = 'a8hv-a_w$rw*%1i4z1(f!2t*#qj*ja7-^$sonudrr$$m^73i#v'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+AUTH_USER_MODEL = 'front.User'
 ALLOWED_HOSTS = []
 
 

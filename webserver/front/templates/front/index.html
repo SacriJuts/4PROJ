@@ -15,7 +15,7 @@
   <a class="active" href="/front">Accueil</a>
   <a href="achat">Mes achats</a>
   <a href="contact">Contact</a>
-  <a href="#about">A propos</a>
+  <a href="about">A propos</a>
     <div class="topnav-right">
         <button onclick="document.getElementById('id02').style.display='block'" 
         style="width:auto;">Connexion</button>
@@ -24,15 +24,16 @@
 </div>
 
 <div style="padding-left:16px">
-  <h2>Top Navigation Example</h2>
-  <p>Some content..</p>
+  <h2>Bienvenue chez Supshop !</h2>
+  <p>Pour accedez à votre platforme veuillez vous inscire et télécharger l'application</p>
+    <img style="padding-left:300px" src="{% static 'front/image/phoneappli.png' %}" alt="phone" width="600" height="400">
 </div>
 
 <!--popup inscription-->
     
 <div id="id01" class="modal">
   <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-  <form class="modal-content">
+  <form class="modal-content" method="post" action="#">
     <div class="container">
       <h1>Inscription</h1>
       <p>Merci de remplir les champs pour créer votre compte</p>
@@ -70,14 +71,11 @@
     
  <div id="id02" class="modal">
   <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
-  <form class="modal-content animate">
+  <form class="modal-content animate" method="post" action="#">
 
     <div class="container">
-      <label for="nom"><b>Nom</b></label>
-      <input type="text" placeholder="Nom" name="nom" required>
-
-      <label for="psw"><b>mot de passe</b></label>
-      <input type="password" placeholder="mot de passe" name="mdp" required>
+      {% csrf_token %}
+      {{ loginform.as_p }}
         
       <button type="submit" class="loginbtnlogin">Connexion</button>
       <label>
