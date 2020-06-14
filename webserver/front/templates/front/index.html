@@ -6,6 +6,20 @@
 {% endif %}
 
 {% block content %}
+
+
+{% if user.is_authenticated %}
+<div class="topnav">
+  <a class="active" href="/front">Accueil</a>
+  <a href="achat">Mes achats</a>
+  <a href="contact">Contact</a>
+  <a href="about">A propos</a>
+    <div class="topnav-right">
+        <a style="width:auto; display:block;" href="logout">Déconnexion</a>
+    </div>
+{% endif %}
+</div>
+
     <h2>Bienvenue 
         {{ user.username }}
     </h2>
@@ -21,6 +35,7 @@
             <form action="#" method="post">
             {% csrf_token %}
             {{ loginform.as_p }}
+                <input type="hidden" name="formtype" value="login" />
         <button type="submit" class="loginbtnlogin">Connexion</button>
             </form>
         <p>Pas encore inscrit ?!</p>
@@ -38,6 +53,7 @@
     <div class="container">
         {% csrf_token %}
         {{ registerform.as_p }}
+                <input type="hidden" name="formtype" value="register" />
 
       <p>En créant le compte vous acceptez les <a href="#" style="color:dodgerblue">conditions d'utilisation & politique de confidentialité</a>.</p>
 

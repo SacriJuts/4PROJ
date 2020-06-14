@@ -4,6 +4,7 @@ from django.shortcuts import render
 from .forms import LoginForm, RegisterForm
 from django.contrib import auth
 from django.http import HttpResponseRedirect
+from .models import User
 
 def index(request):
 
@@ -14,15 +15,20 @@ def index(request):
     }
 
     if request.method == "POST":
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = auth.authenticate(username = username, password = password)
+        if request.POST.get('formtype') == "login":
+            username = request.POST.get('username')
+            password = request.POST.get('password')
 
-        if user is not None:
-            auth.login(request, user)
-            return HttpResponseRedirect("/front/about")
-        else :
-            context['error'] = "Wrong login"
+            user = auth.authenticate(username = username, password = password)
+            if user is not None:
+                auth.login(request, user)
+                return HttpResponseRedirect("/front/")
+            else :
+                context['error'] = "Wrong login"
+        elif request.POST.get('formtype') == "register":
+            f = RegisterForm(request.POST)
+            if f.is_valid():
+                f.save()
 
     return render(request, 'front/index.html', context)
 

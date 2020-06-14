@@ -1,4 +1,5 @@
 from django.forms import ModelForm
+from django.contrib.auth.forms import UserCreationForm
 from .models import User
 from django import forms
 
@@ -12,15 +13,13 @@ class LoginForm(ModelForm):
 			'password' : forms.PasswordInput()
 		}
 
-class RegisterForm(ModelForm):
+class RegisterForm(UserCreationForm):
 	class Meta:
 		model = User
-		fields = ['username', 'password', 'email']
+		fields = ['username', 'email']
 		labels = {'username' : 'Username :',
-				  'password' : 'Password :',
 				  'email' : 'Mail',
 				  }
 		widgets = {
-			'password' : forms.PasswordInput(),
 			'email' : forms.EmailInput()
 		}
