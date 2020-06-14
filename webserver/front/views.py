@@ -19,9 +19,9 @@ def index(request):
 
         if user is not None:
             auth.login(request, user)
+            return HttpResponseRedirect("/front/about")
         else :
             context['error'] = "Wrong login"
-            auth.logout(request)
 
     return render(request, 'front/index.html', context)
 
@@ -40,8 +40,13 @@ def about(request):
     context = {
     }
     return render(request, 'front/about.html', context)
+	
+def base(request):
+    context = {
+    }
+    return render(request, 'front/base.html', context)
 
 def logout(request):
     context = {}
     auth.logout(request)
-    return render(request, '', context)
+    return HttpResponseRedirect("/front")
