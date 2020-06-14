@@ -1,10 +1,11 @@
 from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import render
-from .forms import LoginForm, RegisterForm
+from .forms import LoginForm, RegisterForm, PickProduct
 from django.contrib import auth
 from django.http import HttpResponseRedirect
-from .models import User
+from .models import Product, Cart
+from datetime import datetime
 
 def index(request):
 
@@ -32,7 +33,6 @@ def index(request):
 
     return render(request, 'front/index.html', context)
 
-
 def contact(request):
     context = {
     }
@@ -40,10 +40,42 @@ def contact(request):
 	
 def achat(request):
     context = {
-        'user' : request.user
+        'user' : request.user,
     }
     return render(request, 'front/achat.html', context)
-	
+
+def scan(request):
+
+
+    context = {
+        'products' : Product.objects.filter(cart = None),
+        'pickproduct' : PickProduct(),
+    }
+    currentCart = ""
+    if (Cart.objects.filter(date=None).count() == 0):
+        currentCart = Cart(client=request.user)
+    else:
+        currentcart = Cart.objects.get(client = request.user.id, date = None)
+
+    context['cart'] = currentCart
+    if request.method == "POST":
+        if request.POST.get("formtype") == "addproduct":
+            qr = request.POST.get("qrcode")
+            product = Product.objects.get(qrcode = qr)
+            product.cart = currentcart
+            product.save()
+        elif request.POST.get("formtype") == "deleteproduct":
+            qr = request.POST.get("qrcode")
+            product = Product.objects.get(qrcode = qr)
+            product.cart = None
+            product.save()
+        elif request.POST.get("formtype") == "submitcart":
+            currentcart.date = datetime.now()
+            currentcart.save()
+
+
+    return render(request, 'front/scan.html', context)
+
 def about(request):
     context = {
     }

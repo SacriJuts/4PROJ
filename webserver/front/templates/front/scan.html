@@ -1,12 +1,65 @@
 {% extends "front/base.html" %}
 {%load static%}
+{%load front_extras%}
 {% if user.is_authenticated %}
     {% block connection %}
     {% endblock %}
 {% endif %}
 
 {% block content %}
+<form style="max-width : 600px" action="#" method="POST">
+    {% csrf_token %}
+    {{ pickproduct }}
+    <input type="hidden" name="formtype" value="addproduct" />
+    <input type="submit" value="Add Product" />
+</form>
 
+<form action="#" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="formtype" value="submitcart" />
+    <input type="submit" value="Submit Cart" />
+</form>
+
+{% if cart.product_set.count != None %}
+    <table style="border-collapse : collapse">
+        <tr>
+            <td>Produit</td>
+            <td>Prix</td>
+            <td>QR Code</td>
+            <td></td>
+        </tr>
+        {% for product in cart.product_set.all %}
+            <tr class="product">
+                <td>{{ product.name }}</td>
+                <td>{{ product.price|divide:100 }}€</td>
+                <td>{{ product.qrcode }}</td>
+                <td>
+                    <form method="POST" action="#">
+                        {% csrf_token %}
+                        <input type="hidden" name="qrcode" value="{{ product.qrcode }}" />
+                        <input type="hidden" name="formtype" value="deleteproduct" />
+                        <input type="submit" value="Delete" />
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+
+<table style="border-collapse : collapse">
+    <tr>
+        <td>Produit</td>
+        <td>Prix</td>
+        <td>QR Code</td>
+    </tr>
+    {% for product in products %}
+        <tr class="product">
+            <td>{{ product.name }}</td>
+            <td>{{ product.price|divide:100 }}€</td>
+            <td>{{ product.qrcode }}</td>
+        </tr>
+    {% endfor %}
+</table>
 
 
 {% endblock %}

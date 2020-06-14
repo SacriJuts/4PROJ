@@ -1,6 +1,6 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, Form
 from django.contrib.auth.forms import UserCreationForm
-from .models import User
+from .models import User, Product
 from django import forms
 
 class LoginForm(ModelForm):
@@ -18,8 +18,16 @@ class RegisterForm(UserCreationForm):
 		model = User
 		fields = ['username', 'email']
 		labels = {'username' : 'Username :',
-				  'email' : 'Mail',
+				  'email' : 'Mail :',
 				  }
 		widgets = {
 			'email' : forms.EmailInput()
+		}
+
+class PickProduct(ModelForm):
+	class Meta:
+		model = Product
+		fields = ['qrcode']
+		labels = {
+			'qrcode' : 'Qr Code :'
 		}

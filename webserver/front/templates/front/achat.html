@@ -8,20 +8,28 @@
 
 {% block content %}
 
-  {% for cart in user.cart_set.all %}
-    <div class="cart">
-      <div class="cart-meta">
-        <p>{{ cart.date }}</p>
-      </div>
-      {% for product in cart.product_set.all %}
-        <div class="product">
-          <p>{{ product.name }}</p>
-          <p>{{ product.price|divide:100 }}€</p>
-        </div>
-      {% endfor %}
-    </div>
+<h1>Panier de {{ user.username }}</h1>
+{% for cart in user.cart_set.all %}
+<h3></h3>
+<table>
+    <tr>
+        <th colspan="2">{{ cart.date|default_if_none:"panier courant" }}</th>
+    </tr>
+    <tr>
 
+        <th class="article">Article</th>
+        <th class="prix">Prix</th>
+    </tr>
 
-  {% endfor %}
+    {% for product in cart.product_set.all %}
+    <tr>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price|divide:100 }}€</td>
+
+  </tr>
+    {% endfor %}
+</table>
+
+{% endfor %}
 
 {% endblock %}

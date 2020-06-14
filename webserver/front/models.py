@@ -32,7 +32,7 @@ class Product(models.Model):
 	shelf = models.ForeignKey(Shelf, on_delete = models.DO_NOTHING)
 	price = models.IntegerField()
 	name = models.CharField(max_length = 500)
-	qrcode = models.CharField(max_length = 200)
+	qrcode = models.CharField(unique=True, max_length = 200)
 	serial_number = models.CharField(max_length = 100)
 
 	def __str__(self):
