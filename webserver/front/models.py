@@ -11,10 +11,13 @@ class User(AbstractUser):
 
 class Cart(models.Model) :
 	client = models.ForeignKey(User, on_delete = models.CASCADE)
-	date = models.DateTimeField()
+	date = models.DateTimeField(null=True, blank=True)
 
 	def __str__(self):
-		return self.client.name + " - " + self.date.ctime()
+		pre = " - In progress"
+		if self.date != None:
+			pre = " - " + self.date.ctime()
+		return self.client.username + pre
 
 class Shelf(models.Model):
 	name = models.CharField(max_length=50)
@@ -25,7 +28,7 @@ class Shelf(models.Model):
 		return self.name + " (" + str(self.position_x) + ", " + str(self.position_y) + ")"
 
 class Product(models.Model):
-	cart = models.ForeignKey(Cart, on_delete = models.DO_NOTHING)
+	cart = models.ForeignKey(Cart,null=True, blank=True, on_delete = models.DO_NOTHING)
 	shelf = models.ForeignKey(Shelf, on_delete = models.DO_NOTHING)
 	price = models.IntegerField()
 	name = models.CharField(max_length = 500)
@@ -33,4 +36,7 @@ class Product(models.Model):
 	serial_number = models.CharField(max_length = 100)
 
 	def __str__(self):
-		return self.name
+		pre = " - Available"
+		if self.cart != None:
+			pre = " - Bought"
+		return self.name + pre

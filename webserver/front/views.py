@@ -40,6 +40,7 @@ def contact(request):
 	
 def achat(request):
     context = {
+        'user' : request.user
     }
     return render(request, 'front/achat.html', context)
 	
