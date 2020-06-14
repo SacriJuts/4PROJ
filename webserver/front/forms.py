@@ -15,11 +15,12 @@ class LoginForm(ModelForm):
 class RegisterForm(ModelForm):
 	class Meta:
 		model = User
-		fields = ['username', 'password', 'mail']
+		fields = ['username', 'password', 'email']
 		labels = {'username' : 'Username :',
 				  'password' : 'Password :',
-				  'mail' : 'Mail :'}
+				  'email' : 'Mail',
+				  }
 		widgets = {
 			'password' : forms.PasswordInput(),
-			'mail' : forms.EmailInput()
+			'email' : forms.EmailInput()
 		}
