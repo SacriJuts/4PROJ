@@ -1,5 +1,6 @@
 {% extends "front/base.html" %}
 {%load static%}
+{% load front_extras %}
 {% if user.is_authenticated %}
     {% block connection %}
     {% endblock %}
@@ -7,10 +8,20 @@
 
 {% block content %}
 
+  {% for cart in user.cart_set.all %}
+    <div class="cart">
+      <div class="cart-meta">
+        <p>{{ cart.date }}</p>
+      </div>
+      {% for product in cart.product_set.all %}
+        <div class="product">
+          <p>{{ product.name }}</p>
+          <p>{{ product.price|divide:100 }}€</p>
+        </div>
+      {% endfor %}
+    </div>
 
-<div style="padding-left:16px">
-  <h2>Top Navigation Example</h2>
-  <p>Some content..</p>
-</div>
+
+  {% endfor %}
 
 {% endblock %}

@@ -17,10 +17,14 @@
     <div class="topnav-right">
         <a style="width:auto; display:block;" href="logout">Déconnexion</a>
     </div>
-{% else %}
 </div>
 
     <h2>Bienvenue 
+        {{ user.username }}
+    </h2>
+
+{% else %}
+    <h2>Bienvenue
         {{ user.username }}
     </h2>
     <p>Pour accedez à votre platforme veuillez vous inscire et télécharger l'application</p>
